@@ -15,7 +15,6 @@ input_username = ""
 
 
 # Functions
-
 def check_credentials():
     input_username = txtbox_username.get()
     input_passwd = txtbox_password.get()
