@@ -9,11 +9,6 @@ loginApp.title("Login App")
 loginApp.geometry("340x150")
 loginApp.eval('tk::PlaceWindow . center')
 
-# Variables
-input_passwd = ""
-input_username = ""
-
-
 # Functions
 def check_credentials():
     input_username = txtbox_username.get()
@@ -43,6 +38,7 @@ txtbox_password = Entry(loginApp, width=30, show="*")
 btn_login = Button(loginApp, text="Login", command=check_credentials)
 btn_cancel = Button(loginApp, text="Cancel")
 
+
 lbl_1.grid(row=0, column=0)
 lbl_2.grid(row=0, column=4)
 lbl_username.grid(row=3, column=1)
@@ -50,6 +46,6 @@ lbl_password.grid(row=5, column=1)
 txtbox_username.grid(row=3, column=4)
 txtbox_password.grid(row=5, column=4)
 btn_cancel.grid(row=10, column=3)
-btn_login.grid(row=10, column=4) 
+btn_login.grid(row=10, column=4)
 
 loginApp.mainloop()
