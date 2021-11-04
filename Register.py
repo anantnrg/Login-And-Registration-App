@@ -4,7 +4,6 @@ import sqlite3
 import datetime
 
 # Make window
-
 regApp = Tk()
 regApp.title("Add New User")
 regApp.geometry("400x180")
