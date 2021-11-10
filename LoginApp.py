@@ -18,13 +18,11 @@ def check_credentials():
     c.execute("SELECT usr_name FROM users WHERE usr_name =  ? AND usr_passwd = ?" ,(input_username,input_passwd))
     data = c.fetchone()
 
-    if data is None:
+    if data is None:    
         messagebox.showerror("Incorrect Password", "You have entered an incorrect password. Please correct it.")
     else:
         messagebox.showinfo("Login successfull", "Your Login is successfull")
         loginApp.destroy()
-
-
     conn.commit()
     conn.close()
 

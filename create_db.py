@@ -1,6 +1,5 @@
 import sqlite3
 
- 
 db = sqlite3.connect('user_creds.db')
 c = db.cursor()
 
@@ -13,4 +12,3 @@ c.execute(""" CREATE TABLE users (
 			
 db.commit()
 db.close()
-

@@ -2,6 +2,7 @@ from tkinter import *
 import pickle
 import sqlite3
 import datetime
+from tkinter import messagebox
 
 # Make window
 regApp = Tk()
@@ -20,6 +21,18 @@ usr_passwd_confirm = ""
 # Save credentials
 global usr_id
 usr_id = datetime.datetime.now().strftime('%Y%m%d%H%M%S%f') 
+
+def check_not_blank():
+	if txtbox_usr_name.get() == "" and txtbox_usr_passwd.get() == "" and txtbox_full_name.get() == "":
+		messagebox.showerror("No credentials", "No username, password or full name was given. Please enter the correct credentials.")
+	else:
+		check_both_passwds()
+
+def check_both_passwds():
+	if txtbox_usr_passwd.get() == txtbox_usr_passwd_confirm.get():
+		save_credentials()
+	else:
+		messagebox.showerror("Password Error", "The entered passwords are not the same. Please enter the correct passwords in both fields.")
 
 def save_credentials():
 	conn = sqlite3.connect('user_creds.db')
@@ -62,7 +75,7 @@ txtbox_usr_passwd = Entry(regApp, width=20, show="*")
 txtbox_usr_passwd_confirm = Entry(regApp, width=20, show="*")
 
 # Buttons
-btn_ok = Button(regApp, text="Save", pady=10, padx=20, width=10, command=save_credentials)
+btn_ok = Button(regApp, text="Save", pady=10, padx=20, width=10, command=check_not_blank)
 btn_show_users = Button(regApp, text="Show users", pady=10, padx=20, width=10, command=show_users)
 
 
