@@ -16,12 +16,12 @@ full_name = ""
 usr_name = ""
 usr_passwd = ""
 usr_passwd_confirm = ""
-
-### Functions
-# Save credentials
 global usr_id
 usr_id = datetime.datetime.now().strftime('%Y%m%d%H%M%S%f') 
 
+
+### Functions
+# Save credentials
 def check_not_blank():
 	if txtbox_usr_name.get() == "" and txtbox_usr_passwd.get() == "" and txtbox_full_name.get() == "":
 		messagebox.showerror("No credentials", "No username, password or full name was given. Please enter the correct credentials.")
@@ -30,15 +30,29 @@ def check_not_blank():
 
 def check_both_passwds():
 	if txtbox_usr_passwd.get() == txtbox_usr_passwd_confirm.get():
-		save_credentials()
+		check_usernme_exists()
 	else:
 		messagebox.showerror("Password Error", "The entered passwords are not the same. Please enter the correct passwords in both fields.")
+
+def check_usernme_exists():
+		input_username = txtbox_usr_name.get()
+		conn = sqlite3.connect('user_creds.db')
+		c = conn.cursor()
+		c.execute("SELECT COUNT(usr_name) FROM users WHERE usr_name =  ?" , (input_username,))
+		data = c.fetchone()
+
+		if data[0] > 0:
+			messagebox.showerror("User exists", " The username you have entered already exists. Please enter another username")
+		else:
+			save_credentials()
+		conn.close()
+
 
 def save_credentials():
 	conn = sqlite3.connect('user_creds.db')
 	c = conn.cursor()
 	
-	c.execute("INSERT INTO users VALUES (:usr_code, :full_name,:usr_name, :usr_passwd)",
+	c.execute("INSERT INTO users VALUES (:usr_code, :full_name, :usr_name, :usr_passwd)",
 			{
 				'usr_code' : usr_id,
 				'full_name' : txtbox_full_name.get(),
@@ -48,8 +62,6 @@ def save_credentials():
 			})
 	conn.commit()
 	conn.close()
-
-
 
 def show_users():
 	conn = sqlite3.connect('user_creds.db')
